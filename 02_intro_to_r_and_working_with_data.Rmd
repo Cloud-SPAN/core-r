@@ -1,7 +1,8 @@
 ---
 title: "Introduction to R for complete beginners."
-subtitle: "Cloud-SPAN"
+subtitle: "Cloud-SPAN."
 author: "Emma Rand"
+institute: "University of York, UK"
 output:
   xaringan::moon_reader:
     css: [default, css_files/emma.css, css_files/emma-fonts.css]
@@ -14,12 +15,14 @@ output:
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, 
-                      message = FALSE,	
-                      warning = FALSE,
-                      fig.width = 4, 
-                      fig.height = 4, 
-                      fig.retina = 3)
+knitr::opts_chunk$set(
+  echo = TRUE,
+  message = FALSE,
+  warning = FALSE,
+  fig.width = 4,
+  fig.height = 4,
+  fig.retina = 3
+)
 options(htmltools.dir.version = FALSE)
 ```
 
@@ -28,7 +31,8 @@ options(htmltools.dir.version = FALSE)
 xaringanExtra::use_tile_view()
 # share
 xaringanExtra::style_share_again(
-  share_buttons = "all")
+  share_buttons = "all"
+)
 # broadcast: press P to enter the presenter view. Click on the Broadcast button to start broadcasting. Broadcast button will turn into a broadcast link. Share this link with your audience. When they open the link, their browser will connect with yours and from then on, whenever you advance or change slides, your viewer’s slides will move to the current slide.
 # Note that the broadcast link is unique and, as the presenter, is remembered for 4 hours. After 4 hours of inactivity, a new link will be generated..
 xaringanExtra::use_broadcast()
@@ -38,25 +42,27 @@ xaringanExtra::use_scribble()
 xaringanExtra::use_clipboard()
 # highlighted code
 xaringanExtra::use_extra_styles(
-  hover_code_line = TRUE,         
-  mute_unhighlighted_code = TRUE)
+  hover_code_line = TRUE,
+  mute_unhighlighted_code = TRUE
+)
 ```
 ```{r packages, include=FALSE}
 library(RefManageR)
 library(kableExtra)
 library(tidyverse)
-
 ```
 
 ```{r, load-refs, include=FALSE, cache=FALSE}
-BibOptions(check.entries = FALSE,
-           bib.style = "authoryear",
-           cite.style = "authoryear",
-           style = "markdown",
-           hyperlink = FALSE,
-           dashed = FALSE,
-           longnamesfirst = FALSE,
-           max.names = 2)
+BibOptions(
+  check.entries = FALSE,
+  bib.style = "authoryear",
+  cite.style = "authoryear",
+  style = "markdown",
+  hyperlink = FALSE,
+  dashed = FALSE,
+  longnamesfirst = FALSE,
+  max.names = 2
+)
 myBib <- ReadBib("refs.bib", check = FALSE)
 ```
 
@@ -79,7 +85,7 @@ div.grey { background-color:#d3d3d3; border-radius: 0px; padding: 0px;}
 
 
 ```{r, echo=FALSE, out.width = "160px", fig.align='right'}
-knitr::include_graphics("pics/tidyverse_logo.png")
+knitr::include_graphics("images/tidyverse_logo.png")
 ```
 
 ---
@@ -177,44 +183,65 @@ Structures
 
 class: inverse
 
-# Typing in data, doing some calculations on it, plotting it
+# Typing in data and plotting it
 
 ---
-# Typing in data, calcs, plots
+# Typing in data and plotting it
 
 ## The goal
-We will work some data on the number of males in 64 bird nests with a clutch size of 5. You are going to type data in R, summarise and plot it
---
+We will work with some data on the coat colour of 62 cats. You are going to type data in R and plot it
+
+The data are as a frequency table:
+
+---
 .pull-left[
 
+ The frequency table
+ 
 ```{r , echo=FALSE}
-n <- c(0, 1, 2, 3, 4, 5)
-freq <- c(4, 13, 14, 15, 13, 5)
-df <- data.frame(n, freq)
-knitr::kable(df, 
-             format = "html",
-             col.names = c("No. males", "No. nests"),
-             row.names = FALSE)  |> 
-  kable_styling(font_size = 16)
+coat <- c("black", "white", "tabby", "ginger", "tortoiseshell", "calico")
+freq <- c(23, 15, 8, 10, 5, 1)
+df <- data.frame(coat, freq)
+knitr::kable(df,
+  table.attr = "style='width:30%;'",
+  caption = "Frequency of coat colours in 62 cats",
+  format = "html",
+  col.names = c("Coat colour", "No. cats"),
+  row.names = FALSE
+) |>
+  kable_styling()
 ```
 ]
 .pull-right[
 
+The aim
+
 ```{r , echo=FALSE, fig.height=3}
-nest_data <- data.frame(n = factor(n), freq)
-ggplot(data = nest_data, aes(x = n, y = freq)) +
-  geom_col(colour = "black", fill = "white", width = 1) +
-  scale_x_discrete(name = "Number of males",
-                   expand = c(0, 0)) +
-  scale_y_continuous(name = "Number of nests",
-                     expand = c(0, 0)) +
+coat_data <- data.frame(coat, freq)
+ggplot(
+  data = coat_data,
+  aes(
+    x = reorder(coat, freq, decreasing = TRUE),
+    y = freq
+  )
+) +
+  geom_col(colour = "black", fill = "lightblue", width = 1) +
+  scale_x_discrete(
+    name = "Coat colour",
+    expand = c(0, 0)
+  ) +
+  scale_y_continuous(
+    name = "Number of cats",
+    expand = c(0, 0),
+    limits = c(0, 25)
+  ) +
   theme_classic()
 ```
 ]
 
 
 ---
-# Typing in data, calcs, plots
+# Typing in data and plotting it
 
 ## Getting set up
 
@@ -222,126 +249,62 @@ In RStudio do File | New project | New directory
 
 Be purposeful about where you create it and name it.
 
-I suggest `birds`
+I suggest `cloud-span`
 
 --
 
-Make a new script ![new script](pics/newscript.png) and save it as analysis.R to carry out the rest of the work.  
-
+Make a new script ![new script](images/newscript.png) and save it as `analysis.R` to carry out the rest of the work.  
 
 
 ---
-# Typing in data, calcs, plots
+# Typing in data and plotting it
 
 ## Data structures
 
-Make a vector `n` that holds the numbers 0 to 5. 
+Start by making a vector called `coat` that holds coat colours
 ```{r}
-# the number of males in a clutch of five
-n <- c(0, 1, 2, 3, 4, 5)
+# coat colours
+coat <- c("black", "white", "tabby", "ginger", "tortoiseshell", "calico")
 ```
 
-* Write your command in the analysis.R  
+-   Write your command in the analysis.R  
 
 --
 
-* Notice I have used a comment  
+-   Notice I have used a comment  
 --
 
-* Cursor on the line you want to execute  
+-   Cursor on the line you want to execute  
 
 --
 
-* Execute with ![Run](pics/runbutton.png) or Ctrl+Enter 
+-   Execute with ![Run](images/runbutton.png) or Ctrl+Enter 
 
 ---
-# Typing in data, calcs, plots
+# Typing in data and plotting it
 
 ## Data structures
 
-Create a vector, `freq`, containing the numbers of nests with 0 to 5 males. 
+Create a vector called `freq` containing the numbers of cats with each coat colour 
 
 --
 
 ```{r}
-# the number of nests with 0 to 5 males
-freq <- c(4, 13, 14, 15, 13, 5)
+# numbers of cats with each coat colour
+freq <- c(23, 15, 8, 10, 5, 1)
 ```
 
 ---
-# Typing in data, calcs, plots
+# Typing in data and plotting it
 
 ## Total number of nests
 
-We can use `sum(freq)` to check the total number of nests is 64.
+We can use `sum(freq)` to check the total number of cats is 62.
 
 ```{r}
-# the total number of nests
+# the total number of cats
 sum(freq)
 ```
-
----
-# Typing in data, calcs, plots
-
-## Finding the mean
-We have frequencies so to find the mean number of males per nest we need the total number of males:
-.pull-left[
-```{r , echo=FALSE}
-df$product <- df$n * df$freq
-totalm <- sum(df$product)
-totaln <- sum(df$freq)
-dfchar <- df |>
-  mutate_all(as.character)
-dfchar <- rbind(dfchar, c("Total", totaln, totalm))
-dfchar |> kable(format = "html",
-                 col.names = c("No. males", "No. nests", "No. males *No. nests"),
-                 row.names = FALSE) |> 
-  kable_styling(font_size = 16) |>
-  row_spec(6, hline_after = TRUE) |>
-  row_spec(7, bold = TRUE, background = "#C0C2C9")
-```
-]
-
-.pull-right[
-
-$$\frac{163}{64} = 2.55$$
-]
-
----
-# Typing in data, calcs, plots
-
-## Finding the mean
-Total number of nests:
-```{r}
-total_nests <- sum(freq)
-```
- 
---
-Total number of males
-```{r}
-total_males <- sum(n * freq)
-```
-
----
-# Typing in data, calcs, plots
-
-## Finding the mean
-Mean number of males per nest:
-```{r}
-total_males/total_nests
-```
-
-
----
-# Why it works
-
-R works 'elementwise' unlike most programming languages.  
-` n * freq`
-gives
-
-$$\begin{bmatrix}0\\1\\2\\3\\4\\5\end{bmatrix}\times\begin{bmatrix}4\\13\\14\\15\\13\\5\end{bmatrix}=\begin{bmatrix}0\\13\\28\\45\\52\\25\end{bmatrix}$$
-
-It was designed to make it easy to work with data.
 
 ---
 
@@ -350,11 +313,11 @@ class: inverse
 # Plotting the data with ggplot()
 
 ---
-background-image: url(pics/ggplot2.png)
+background-image: url(images/ggplot2.png)
 background-position: 90% 75%
 background-size: 200px
 
-# Typing in data, calcs, plots
+# Typing in data and plotting it
 
 Commands like `c()`, `sum()`, and `str()` are part the 'base' R system.
 
@@ -367,10 +330,10 @@ Other packages, such as `ggplot2` `r Cite(myBib, "ggplot2")` need to be added.
 `ggplot2` is one of the `tidyverse` `r Cite(myBib, "tidyverse")` packages.
 
 ---
-background-image: url(pics/tidyverse.png)
+background-image: url(images/tidyverse.png)
 background-position: 90% 75%
 background-size: 200px
-# Typing in data, calcs, plots
+# Typing in data and plotting it
 
 You should have already installed `tidyverse` but we need to load it (add it to our library) before we can use it in a session.
 
@@ -378,6 +341,7 @@ You should have already installed `tidyverse` but we need to load it (add it to 
 library(tidyverse)
 ```
 
+You will likely be warned of some function name conflicts but these will not be a problem for you.
 --
 
 We will also later use `dplyr` and `tidyr` functions also from `tidyverse`.
@@ -396,17 +360,16 @@ We will also later use `dplyr` and `tidyr` functions also from `tidyverse`.
 
 `ggplot()` takes a dataframe for an argument
 
-We can make a dataframe of the two vectors, `n` and `freq`: 
+We can make a dataframe of the two vectors, `coat` and `freq` using the `data.frame()` function.
 ```{r}
-nest_data <- data.frame(n = factor(n), freq)
+coat_data <- data.frame(coat, freq)
 ```
 
-`n` was made into a factor (a categorical variable).
+--
 
+`coat_data` is the name we have given the dataframe
 
-`nest_data` is the name we have given the dataframe
-
-Click on `nest_data` in the Environment. 
+Click on `coat_data` in the Environment. 
 
 ---
 # Plotting using ggplot2
@@ -416,7 +379,7 @@ Click on `nest_data` in the Environment.
 Create a simple barplot using `ggplot` like this:
 
 ```{r, fig.height=3.5}
-ggplot(data = nest_data, aes(x = n, y = freq)) +
+ggplot(data = coat_data, aes(x = coat, y = freq)) +
   geom_col()
 ```
 
@@ -442,7 +405,7 @@ Thus...
 
 ## A barplot
 
-`ggplot(data = nest_data, aes(x = n, y = freq))` produces a plot with axes 
+`ggplot(data = coat_data, aes(x = coat, y = freq))` produces a plot with axes 
 
 --
 
@@ -457,24 +420,26 @@ class: inverse
 ---
 # Using the help manual
 
-'Arguments' can be added to the `geom_col()` command.  
+'Arguments' can be added to the `geom_col()` command inside the brackets.
 
-Commands do something 
+Commands do something and their arguments (in brackets) and can specify:
 
-Their arguments go in brackets and can specify:
-* what object to do it to  
-* how exactly to do it  
+-   what object to do it to
 
---
-
-Many commands have defaults so you need only supply an object.
+-   how exactly to do it
 
 --
+
+Many arguments have defaults so you don't always need to supply them.
+
+---
+# Using the help manual
 
 Open the manual page using:
 ```{r eval=FALSE}
 ?geom_col()
 ```
+
 
 ## Demonstration
 ---
@@ -495,7 +460,7 @@ Open the manual page using:
 
 Change the fill of the bars using `fill`:
 ```{r plot-last1, fig.show = 'hide'}
-ggplot(data = nest_data, aes(x = n, y = freq)) +
+ggplot(data = coat_data, aes(x = coat, y = freq)) +
   geom_col(fill = "lightblue")
 ```
 .pull-left[
@@ -506,20 +471,32 @@ ggplot(data = nest_data, aes(x = n, y = freq)) +
 .pull-right[
 Colours can be given by their name, "lightblue" or code, "#ADD8E6".  
 
-Look up by [name](pics/colournames.pdf) or [code](pics/colourhex.pdf)
+Look up by [name](images/colournames.pdf) or [code](images/colourhex.pdf)
 
 ]
 
 ---
 # Using manual: Alter a ggplot
 
-`fill` is an aesthetic. 
+`fill` is one of the arguments covered by `...`. `fill` is an 'aesthetic'. If you look for `...` in the list of arguments you will see it says:
 
-We can set (map) fill aesthetic to a particular colour inside `geom_col()` or map it to a variable inside the `aes()` instead
+> Other arguments passed on to layer(). These are often aesthetics, used to set an aesthetic to a fixed value, like colour = "red" or size = 3. They may also be parameters to the paired geom/stat.
+
+We just set the `fill` aesthetic to a fixed value.
+---
+# Using manual: Alter a ggplot
+
+
+Further down the manual, there is a section on **Aesthetics** which lists those understood by `geom_col()`
+
+We can set (map) the `fill` aesthetic to a fixed colour inside `geom_col()` *or* map it to a variable from the dataframe inside the `aes()` instead. This means the colour will be different for different values in that variable.
+
+
 ---
 # Using manual: Alter a ggplot
 ```{r plot-last2, fig.show = 'hide'}
-ggplot(data = nest_data, aes(x = n, y = freq, fill = n)) +
+ggplot(data = coat_data, 
+       aes(x = coat, y = freq, fill = coat)) +
   geom_col()
 ```
 .pull-left[
@@ -530,19 +507,24 @@ ggplot(data = nest_data, aes(x = n, y = freq, fill = n)) +
 .pull-right[
 
 Mapping fill to variable means the colour varies for each value of n. 
+
+Note that we have taken `fill = "lightblue"` out of the `geom_col()` and instead put `fill = coat` in the `aes()`.
 ]
 ---
 # Using manual: Alter a ggplot
 
 Can you use the manual to put the bars next to each other?
+Look for the argument that will mean there is no space between the bars.
 
 .footnote[
 <br>
 `r text_spec("Extra exercise:", background = "#25496b", color = "#f6fafd", bold = TRUE)`  Change the colour of the lines around each bar to black.]
---
+
+
+---
 
 ```{r fig.height=2.8}
-ggplot(data = nest_data, aes(x = n, y = freq)) +
+ggplot(data = coat_data, aes(x = coat, y = freq)) +
   geom_col(fill = "lightblue", width = 1)
 ```
 
@@ -554,10 +536,11 @@ ggplot(data = nest_data, aes(x = n, y = freq)) +
 
 .pull-left[
 ```{r plot-last3, fig.show="hide"}
-ggplot(data = nest_data,
-       aes(x = n, y = freq)) +
-  geom_col(fill = "lightblue", 
-           width = 1, 
+ggplot(
+  data = coat_data,
+  aes(x = coat, y = freq)) +
+  geom_col(fill = "lightblue",
+           width = 1,
            colour = "black")
 ```
 ]
@@ -579,9 +562,12 @@ Make your code easier to read by using white space and new lines
 
 ---
 # Alter a ggplot: axes 
-Changes to a discrete x axis: `scale_x_discrete()`.
 
-Changes to a continuous y axis: `scale_y_continuous()`.
+We can make changes to the axes using:
+
+-   Changes to a discrete x axis: `scale_x_discrete()`
+
+-   Changes to a continuous y axis: `scale_y_continuous()`
 
 `ggplot` automatically extends the axes slightly. You can turn this behaviour off with the expand argument.
 
@@ -592,10 +578,10 @@ Each 'layer' is added to the ggplot() command with a `+`
 ---
 # Alter a ggplot: axes
 
-```{r fig.height=3.5}
-ggplot(data = nest_data, aes(x = n, y = freq)) +
-  geom_col(fill = "lightblue", 
-           width = 1, 
+```{r plot-last4, fig.show="hide"}
+ggplot(data = coat_data, aes(x = coat, y = freq)) +
+  geom_col(fill = "lightblue",
+           width = 1,
            colour = "black") +
   scale_x_discrete(expand = c(0, 0)) + #<<
   scale_y_continuous(expand = c(0, 0)) #<<
@@ -603,22 +589,117 @@ ggplot(data = nest_data, aes(x = n, y = freq)) +
 
 .pull-right[
 .footnote[
-`r text_spec("Extra exercise:", background = "#25496b", color = "#fdf9f6", bold = TRUE)`  Look up `scale_x_discrete` in the manual and work out how to change "n" to "Number of Males"]
+`r text_spec("Extra exercise:", background = "#25496b", color = "#fdf9f6", bold = TRUE)`  Look up `scale_x_discrete` in the manual and work out how to change "coat" to "Coat colour"]
 ]
 
 ---
 # Alter a ggplot: axes
 
-```{r fig.height=2.5}
-ggplot(data = nest_data, aes(x = n, y = freq)) +
-  geom_col(fill = "lightblue", 
-           width = 1, 
+```{r ref.label = 'plot-last4', echo = FALSE}
+```
+
+
+---
+# Alter a ggplot: axes
+
+```{r plot-last5, fig.show="hide"}
+ggplot(data = coat_data, aes(x = coat, y = freq)) +
+  geom_col(fill = "lightblue",
+           width = 1,
            colour = "black") +
   scale_x_discrete(expand = c(0, 0),
-                   name = "Number of Males") + #<<
+                   name = "Coat colour") + #<<
   scale_y_continuous(expand = c(0, 0),
-                     name = "Number of Nests") 
+                     name = "Number of cats") #<<
 ```
+
+---
+# Alter a ggplot: axes
+
+```{r ref.label = 'plot-last5', echo = FALSE}
+```
+
+
+---
+# Alter a ggplot: axes
+
+I would prefer to see the *y*-axis extend a little beyond the data and we can change the axis "limits" in the `scale_y_continuous()`
+
+---
+# Alter a ggplot: axes
+```{r plot-last6, fig.show="hide"}
+ggplot(data = coat_data, aes(x = coat, y = freq)) +
+  geom_col(fill = "lightblue",
+           width = 1,
+           colour = "black") +
+  scale_x_discrete(expand = c(0, 0),
+                   name = "Coat colour") +
+  scale_y_continuous(expand = c(0, 0),
+                     name = "Number of cats",
+                     limits = c(0, 25)) #<<
+```
+
+---
+# Alter a ggplot: axes
+
+```{r ref.label = 'plot-last6', echo = FALSE}
+```
+
+
+
+---
+# Alter a ggplot: removing the backgd
+
+```{r plot-last7, fig.show="hide"}
+ggplot(data = coat_data, aes(x = coat, y = freq)) +
+  geom_col(width = 1,
+           colour = "black",
+           fill = "lightblue") +
+  scale_x_discrete(expand = c(0, 0),
+                   name = "Coat colour") +
+  scale_y_continuous(expand = c(0, 0),
+                     name = "Number of cats",
+                     limits = c(0, 25)) +
+  theme_classic() #<<
+```
+
+---
+# Alter a ggplot: axes
+
+```{r ref.label = 'plot-last7', echo = FALSE}
+```
+
+
+---
+# Alter a ggplot:  bar ordering
+
+-   The default ordering of a categorical variable like `coat` is alphabetical. Often we want to change the order. 
+
+-   We can order the categories by the values in another variable by using `reorder()` 
+---
+# Alter a ggplot:  bar ordering
+
+```{r plot-last8, fig.show="hide"}
+ggplot(data = coat_data,
+       aes(x = reorder(coat, freq, decreasing = TRUE), #<<
+           y = freq)) +
+  geom_col( width = 1,
+            colour = "black",
+            fill = "lightblue") +
+  scale_x_discrete(expand = c(0, 0),
+                   name = "Coat colour") +
+  scale_y_continuous(expand = c(0, 0),
+                     name = "Number of cats",
+                     limits = c(0, 25)) +
+  theme_classic()
+```
+
+---
+# Alter a ggplot: axes
+
+```{r ref.label = 'plot-last8', echo = FALSE}
+```
+
 
 ---
 
@@ -634,22 +715,22 @@ Summarise
 ```{r echo=FALSE}
 pigeon <- read.table("data/pigeon.txt", header = T)
 pigeon2 <- pivot_longer(data = pigeon,
-                        cols = everything(), 
+                        cols = everything(),
                         names_to = "population",
                         values_to = "distance")
 sumpig <- pigeon2 |>
-  group_by(population) |> 
+  group_by(population) |>
   summarise(n = length(distance),
             mean = mean(distance),
-            se = sd(distance)/sqrt(n))
-sumpig |> 
-    kable(format = "html",
-          digits = 2,
-                 col.names = c("Population",
-                               "N", 
-                               "Mean",
-                               "SE"),
-                 row.names = FALSE) |>
+            se = sd(distance) / sqrt(n))
+sumpig |>
+  kable(format = "html",
+        digits = 2,
+        col.names = c("Population",
+                      "N",
+                      "Mean",
+                      "SE"),
+        row.names = FALSE ) |>
   add_header_above(c(" " = 2, " Interorbital distance" = 2)) |>
   kable_styling(font_size = 16)
 ```
@@ -658,17 +739,17 @@ sumpig |>
 Plot
 
 ```{r echo=FALSE}
-ggplot(data = pigeon2, aes(x = distance, fill = population))  +
+ggplot(data = pigeon2, aes(x = distance, fill = population)) +
   geom_density(col = "black", alpha = 0.3) +
-   scale_x_continuous(expand = c(0, 0),
-                   name = "Interorbital distance (mm)") +
+  scale_x_continuous(expand = c(0, 0),
+                     name = "Interorbital distance (mm)") +
   scale_y_continuous(expand = c(0, 0),
                      name = "Density") +
   theme_classic()
 ```
 ]
 ---
-background-image: url(pics/interorbital.png)
+background-image: url(images/interorbital.png)
 background-position: 100% 0%
 background-size: 180px
 
@@ -697,9 +778,12 @@ We will work with the interorbital distances of domestic pigeons in two differen
 
 ---
 # Working with Data 
+
 ## Organising
 
-Make two folders in your Project directory (this is also your working directory) called 'data'
+Restart R: Session | Restart R (Control+Shift+F10)
+
+Make a folder in your Project directory (this is also your working directory) called `data`
 
 The easiest way to do this is in RStudio  - see the bottom right Files panel
 
@@ -712,7 +796,7 @@ Save a copy of [pigeon.txt](data/pigeon.txt) to the 'data' folder
 
 ## Start coding
 
-Make a new script called 'analysis.R'
+Make a new script called 'pigeon_analysis.R'
 
 --
 
@@ -818,24 +902,28 @@ Suppose we had just 3 individuals in each of two populations:
 .pull-left[
 NOT TIDY!
 ```{r echo=FALSE}
-knitr::kable(pigeon[1:3,], 
-             format = "html") |>
+knitr::kable(pigeon[1:3, ],
+  format = "html"
+) |>
   kable_styling(font_size = 16)
 ```
 ]
 ```{r echo=FALSE}
-pigeon2 <- gather(data = pigeon, 
-                  key = population, 
-                  value = distance)
+pigeon2 <- gather(
+  data = pigeon,
+  key = population,
+  value = distance
+)
 ```
 
 .pull-right[
 
 TIDY!
 ```{r echo=FALSE}
-knitr::kable(head(pigeon2[c(1:3,41:43),]), 
-             format = "html",
-             row.names = FALSE) |>
+knitr::kable(head(pigeon2[c(1:3, 41:43), ]),
+  format = "html",
+  row.names = FALSE
+) |>
   kable_styling(font_size = 16)
 ```
 ]
@@ -856,9 +944,9 @@ We can make the data tidy with `pivot_longer()`<sup>1</sup>.
 # Working with Data 
 .scroll-output-width[
 ```{r}
-pigeon2 <- pivot_longer(data = pigeon, 
-                        cols = everything(), 
-                        names_to = "population", 
+pigeon2 <- pivot_longer(data = pigeon,
+                        cols = everything(),
+                        names_to = "population",
                         values_to = "distance")
 str(pigeon2)
 ```
@@ -885,17 +973,17 @@ We will also use the pipe operator: ` |> `
 To summarise multiple group data in tidy form:
 
 ```{r eval=FALSE}
-pigeon2 |> 
-  group_by(population) |> 
+pigeon2 |>
+  group_by(population) |>
   summarise(mean = mean(distance))
 ```
 
 --
 
 This can be read as:
-  - take pigeon2 *and then*  
-  - group it by population *and then*  
-  - summarise it by calculating the mean  
+-   take pigeon2 *and then*  
+-   group it by population *and then*  
+-   summarise it by calculating the mean  
 
 i.e., the mean is done for each population.
 
@@ -908,8 +996,8 @@ The `mean` before the `=` is just a name.
 The result:
 
 ```{r echo=FALSE}
-pigeon2 |> 
-  group_by(population) |> 
+pigeon2 |>
+  group_by(population) |>
   summarise(mean = mean(distance))
 ```
 ---
@@ -918,8 +1006,8 @@ pigeon2 |>
 We can add the number of pigeons in each group to the summary using the `length()` function.
 
 ```{r eval=FALSE}
-pigeon2 |> 
-  group_by(population) |> 
+pigeon2 |>
+  group_by(population) |>
   summarise(mean = mean(distance),
             n = length(distance)) #<<
 ```
@@ -936,8 +1024,8 @@ pigeon2 |>
 The result:
 
 ```{r echo=FALSE}
-pigeon2 |> 
-  group_by(population) |> 
+pigeon2 |>
+  group_by(population) |>
   summarise(mean = mean(distance),
             n = length(distance)) #<<
 ```
@@ -947,28 +1035,27 @@ pigeon2 |>
 # Working with Data 
 
 ```{r}
-pigeon2 |> 
-  group_by(population) |> 
+pigeon2 |>
+  group_by(population) |>
   summarise(mean = mean(distance),
             n = length(distance),
             sd = sd(distance), #<<
-            se = sd/sqrt(n))   #<<
+            se = sd / sqrt(n)) #<<
 ```
 
 ---
 # Working with Data 
 To plot this data as a histogram:
 
-```{r plot-last4, fig.show = 'hide'}
+```{r plot-last9, fig.show = 'hide'}
 ggplot(data = pigeon2, aes(x = distance)) +
-  geom_histogram(bins = 10,               #<<
+  geom_histogram(bins = 10, #<<
                  col = "black") +
   scale_x_continuous(name = "Interorbital distance (mm)")
-  
 ```
 .pull-left[
 
-```{r ref.label = 'plot-last4', echo = FALSE, fig.height=3}
+```{r ref.label = 'plot-last9', echo = FALSE, fig.height=3}
 ```
 ]
 
@@ -988,10 +1075,9 @@ To plot multiple group data in tidy form we map the population variable to the `
 
 ```{r fig.height=3}
 ggplot(data = pigeon2, aes(x = distance, fill = population)) + #<<
-  geom_histogram(bins = 10, 
+  geom_histogram(bins = 10,
                  col = "black") +
   scale_x_continuous(name = "Interorbital distance (mm)")
-  
 ```
 .pull-right[
 .footnote[
@@ -1002,23 +1088,21 @@ ggplot(data = pigeon2, aes(x = distance, fill = population)) + #<<
 
 `r text_spec("Extra exercise:", background = "#25496b", color = "#fdf9f6", bold = TRUE)`  Make the axes cross at (0,0)
 
-```{r plot-last5, fig.show = 'hide'}
-ggplot(data = pigeon2, aes(x = distance, fill = population)) + 
-  geom_histogram(bins = 10, 
+```{r plot-last10, fig.show = 'hide'}
+ggplot(data = pigeon2, aes(x = distance, fill = population)) +
+  geom_histogram(bins = 10,
                  col = "black") +
   scale_x_continuous(name = "Interorbital distance (mm)",
                      expand = c(0, 0)) + #<<
   scale_y_continuous(name = "Frequency",
                      expand = c(0, 0)) #<<
-  
-  
 ```
 result on next slide.
 ---
 # Working with Data 
 The result:
 
-```{r ref.label = 'plot-last5', echo = FALSE} 
+```{r ref.label = 'plot-last10', echo = FALSE} 
 ```
 
 ---
@@ -1028,9 +1112,8 @@ The result:
 
 ```{r fig.height=3}
 ggplot(data = pigeon2, aes(x = distance, fill = population)) +
-  geom_density(col = "black") +               #<<
+  geom_density(col = "black") + #<<
   scale_x_continuous(name = "Interorbital distance (mm)")
-  
 ```
 
 ---
@@ -1040,9 +1123,8 @@ Alter the transparency using `alpha`:
 
 ```{r fig.height=3}
 ggplot(data = pigeon2, aes(x = distance, fill = population)) +
-  geom_density(col = "black", alpha = 0.3) +    #<<
+  geom_density(col = "black", alpha = 0.3) + #<<
   scale_x_continuous(name = "Interorbital distance (mm)")
-  
 ```
 
 ---
@@ -1059,8 +1141,7 @@ All [elements can be customised individually](https://ggplot2.tidyverse.org/refe
 ggplot(data = pigeon2, aes(x = distance, fill = population)) +
   geom_density(col = "black", alpha = 0.3) +
   scale_x_continuous(name = "Interorbital distance (mm)") +
-  theme_classic()    #<<
-  
+  theme_classic() #<<
 ```
 
 ---
@@ -1070,14 +1151,13 @@ A different kind of plot:
 
 .pull-left[
 ```{r echo=FALSE} 
-ggplot(data = pigeon2, aes(x = population, y = distance)) + 
-  geom_boxplot() +                            
+ggplot(data = pigeon2, aes(x = population, y = distance)) +
+  geom_boxplot() +
   scale_x_discrete(name = "Population") +
   scale_y_continuous(name = "Interorbital distance (mm)",
-                   expand = c(0, 0),
-                   limits = c(0, 15)) +
+                     expand = c(0, 0),
+                     limits = c(0, 15)) +
   theme_classic()
-  
 ```
 ]
 
@@ -1089,15 +1169,14 @@ Note: We need to change the `aes()` as well as the `geom` because this figure ha
 ---
 # Working with Data 
 
-```{r plot-last6, fig.show = 'hide'} 
-ggplot(data = pigeon2, aes(x = population, y = distance)) + 
-  geom_boxplot() +                            
+```{r plot-last11, fig.show = 'hide'} 
+ggplot(data = pigeon2, aes(x = population, y = distance)) +
+  geom_boxplot() +
   scale_x_discrete(name = "Population") +
   scale_y_continuous(name = "Interorbital distance (mm)",
-                   expand = c(0, 0),
-                   limits = c(0, 15)) +
+                     expand = c(0, 0),
+                     limits = c(0, 15)) +
   theme_classic()
-  
 ```
 
 
@@ -1107,7 +1186,7 @@ ggplot(data = pigeon2, aes(x = population, y = distance)) +
 ---
 # Working with Data 
 
-```{r ref.label = 'plot-last6', echo = FALSE} 
+```{r ref.label = 'plot-last11', echo = FALSE} 
 ```
 ---
 # Summary
@@ -1142,21 +1221,12 @@ PrintBibliography(myBib)
 
 
 ---
-# Introduction to R for complete beginners
-.font60[
-Cloud-SPAN develops training in **Sp**ecialised **an**alyses for environmental 'omics with Cloud-based High Performance Computing and is funded by the [UKRI innovation scholars award](https://www.ukri.org/news/initiatives-boost-health-and-bioscience-skills-and-industry/) ([MR/V038680/1](https://gtr.ukri.org/projects?ref=MR%2FV038680%2F1)) the Natural Environment Research Council ([NE/X006999/1](https://gtr.ukri.org/projects?ref=NE%2FX006999%2F1#/tabOverview)). 
-]
-
+# introduction to R for complete beginners
 
 Emma Rand  
 [emma.rand@york.ac.uk](mailto:emma.rand@york.ac.uk)  
 Twitter: [@er13_r](https://twitter.com/er13_r)   
 GitHub: [3mmaRand](https://github.com/3mmaRand)  
+blog: https://buzzrbeeline.blog/  
 
 <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a><br /><span xmlns:dct="http://purl.org/dc/terms/" property="dct:title">Licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.
-
-
-
-
-
-
