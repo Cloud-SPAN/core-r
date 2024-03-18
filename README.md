@@ -1,3 +1,5 @@
+[![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active) [![DOI](https://zenodo.org/badge/648187704.svg)](https://zenodo.org/doi/10.5281/zenodo.10829618)
+
 # Introduction to R for complete beginners
 
 Cloud-SPAN develops training in **Sp**ecialised **an**alyses for 'omics with Cloud-based High Performance Computing and is funded by the [UKRI innovation scholars award](https://www.ukri.org/news/initiatives-boost-health-and-bioscience-skills-and-industry/) ([MR/V038680/1](https://gtr.ukri.org/projects?ref=MR%2FV038680%2F1)) the Natural Environment Research Council ([NE/X006999/1](https://gtr.ukri.org/projects?ref=NE%2FX006999%2F1#/tabOverview)).
