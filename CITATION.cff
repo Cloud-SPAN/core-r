@@ -1,0 +1,11 @@
+cff-version: 1.1.0
+message: "If you reuse this training material, please cite it as below."
+authors:
+- family-names: "Rand"
+  given-names: "Emma"
+  orcid: "https://orcid.org/0000-0002-1358-8275"
+title: "Cloud-SPAN Core R"
+version: 1.0.0
+doi: 
+date-released: 2023-06-01
+url: "https://cloud-span.github.io/core-r/02_intro_to_r_and_working_with_data.html"
