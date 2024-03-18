@@ -6,6 +6,6 @@ authors:
   orcid: "https://orcid.org/0000-0002-1358-8275"
 title: "Cloud-SPAN Core R"
 version: 1.0.0
-doi: 
+doi: DOI: 10.5281/zenodo.10829619
 date-released: 2023-06-01
 url: "https://cloud-span.github.io/core-r/02_intro_to_r_and_working_with_data.html"
