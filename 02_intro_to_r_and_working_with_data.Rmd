@@ -297,7 +297,7 @@ freq <- c(23, 15, 8, 10, 5, 1)
 ---
 # Typing in data and plotting it
 
-## Total number of nests
+## Total number of cats
 
 We can use `sum(freq)` to check the total number of cats is 62.
 
@@ -393,7 +393,7 @@ ggplot(data = coat_data, aes(x = coat, y = freq)) +
 
 --
 
-`ggplot(data = nest_data)` looks the same. 
+`ggplot(data = coat_data)` looks the same. 
 
 --
 
@@ -471,7 +471,7 @@ ggplot(data = coat_data, aes(x = coat, y = freq)) +
 .pull-right[
 Colours can be given by their name, "lightblue" or code, "#ADD8E6".  
 
-Look up by [name](images/colournames.pdf) or [code](images/colourhex.pdf)
+Look up by [name](http://www.stat.columbia.edu/~tzheng/files/Rcolor.pdf) or [code](https://htmlcolorcodes.com)
 
 ]
 
