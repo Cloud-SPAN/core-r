@@ -3,7 +3,7 @@
   <head>
     <title>Introduction to R for complete beginners.</title>
     <meta charset="utf-8" />
-    <meta name="author" content="Emma Rand" />
+    <meta name="author" content="Evelyn Greeves and Pasky Miranda (slides by Emma Rand)" />
     <script src="libs/header-attrs/header-attrs.js"></script>
     <link href="libs/remark-css/default.css" rel="stylesheet" />
     <link href="libs/tile-view/tile-view.css" rel="stylesheet" />
@@ -38,7 +38,7 @@ class: center, middle, inverse, title-slide
 ## Cloud-SPAN.
 ]
 .author[
-### Emma Rand
+### Evelyn Greeves and Pasky Miranda (slides by Emma Rand)
 ]
 .institute[
 ### University of York, UK
@@ -285,7 +285,7 @@ freq &lt;- c(23, 15, 8, 10, 5, 1)
 ---
 # Typing in data and plotting it
 
-## Total number of nests
+## Total number of cats
 
 We can use `sum(freq)` to check the total number of cats is 62.
 
@@ -391,7 +391,7 @@ ggplot(data = coat_data, aes(x = coat, y = freq)) +
 
 --
 
-`ggplot(data = nest_data)` looks the same. 
+`ggplot(data = coat_data)` looks the same. 
 
 --
 
@@ -470,7 +470,7 @@ ggplot(data = coat_data, aes(x = coat, y = freq)) +
 .pull-right[
 Colours can be given by their name, "lightblue" or code, "#ADD8E6".  
 
-Look up by [name](images/colournames.pdf) or [code](images/colourhex.pdf)
+Look up by [name](http://www.stat.columbia.edu/~tzheng/files/Rcolor.pdf) or [code](https://htmlcolorcodes.com)
 
 ]
 
@@ -517,7 +517,7 @@ Look for the argument that will mean there is no space between the bars.
 
 .footnote[
 &lt;br&gt;
-&lt;span style=" font-weight: bold;    color: #f6fafd !important;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #25496b !important;" &gt;Extra exercise:&lt;/span&gt;  Change the colour of the lines around each bar to black.]
+&lt;span style=" font-weight: bold;    color: rgba(246, 250, 253, 255) !important;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: rgba(37, 73, 107, 255) !important;" &gt;Extra exercise:&lt;/span&gt;  Change the colour of the lines around each bar to black.]
 
 
 ---
@@ -534,7 +534,7 @@ ggplot(data = coat_data, aes(x = coat, y = freq)) +
 ---
 # Using manual: Alter a ggplot
 
-&lt;span style=" font-weight: bold;    color: #f6fafd !important;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #25496b !important;" &gt;Extra exercise:&lt;/span&gt;  Change the colour of the lines around each bar to black.
+&lt;span style=" font-weight: bold;    color: rgba(246, 250, 253, 255) !important;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: rgba(37, 73, 107, 255) !important;" &gt;Extra exercise:&lt;/span&gt;  Change the colour of the lines around each bar to black.
 
 .pull-left[
 
@@ -592,7 +592,7 @@ ggplot(data = coat_data, aes(x = coat, y = freq)) +
 
 .pull-right[
 .footnote[
-&lt;span style=" font-weight: bold;    color: #fdf9f6 !important;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #25496b !important;" &gt;Extra exercise:&lt;/span&gt;  Look up `scale_x_discrete` in the manual and work out how to change "coat" to "Coat colour"]
+&lt;span style=" font-weight: bold;    color: rgba(253, 249, 246, 255) !important;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: rgba(37, 73, 107, 255) !important;" &gt;Extra exercise:&lt;/span&gt;  Look up `scale_x_discrete` in the manual and work out how to change "coat" to "Coat colour"]
 ]
 
 ---
@@ -611,9 +611,9 @@ ggplot(data = coat_data, aes(x = coat, y = freq)) +
            width = 1,
            colour = "black") +
   scale_x_discrete(expand = c(0, 0),
-                   name = "Coat colour") +
+*                  name = "Coat colour") +
   scale_y_continuous(expand = c(0, 0),
-                     name = "Number of cats")
+*                    name = "Number of cats")
 ```
 
 ---
@@ -639,7 +639,7 @@ ggplot(data = coat_data, aes(x = coat, y = freq)) +
                    name = "Coat colour") +
   scale_y_continuous(expand = c(0, 0),
                      name = "Number of cats",
-                     limits = c(0, 25))
+*                    limits = c(0, 25))
 ```
 
 ---
@@ -663,7 +663,7 @@ ggplot(data = coat_data, aes(x = coat, y = freq)) +
   scale_y_continuous(expand = c(0, 0),
                      name = "Number of cats",
                      limits = c(0, 25)) +
-  theme_classic()
+* theme_classic()
 ```
 
 ---
@@ -684,7 +684,7 @@ ggplot(data = coat_data, aes(x = coat, y = freq)) +
 
 ```r
 ggplot(data = coat_data,
-       aes(x = reorder(coat, freq, decreasing = TRUE),
+*      aes(x = reorder(coat, freq, decreasing = TRUE),
            y = freq)) +
   geom_col( width = 1,
             colour = "black",
@@ -1062,9 +1062,9 @@ pigeon2 |&gt;
 ```
 
 .footnote[
-&lt;span style=" font-weight: bold;    color: #fdf9f6 !important;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #25496b !important;" &gt;Extra exercise:&lt;/span&gt;  Add a column for the standard deviation
+&lt;span style=" font-weight: bold;    color: rgba(253, 249, 246, 255) !important;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: rgba(37, 73, 107, 255) !important;" &gt;Extra exercise:&lt;/span&gt;  Add a column for the standard deviation
 
-&lt;span style=" font-weight: bold;    color: #fdf9f6 !important;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #25496b !important;" &gt;Extra exercise:&lt;/span&gt;  Add a column for the standard error given by `\(\frac{s.d.}{\sqrt{n}}\)`
+&lt;span style=" font-weight: bold;    color: rgba(253, 249, 246, 255) !important;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: rgba(37, 73, 107, 255) !important;" &gt;Extra exercise:&lt;/span&gt;  Add a column for the standard error given by `\(\frac{s.d.}{\sqrt{n}}\)`
 
 ]
 ---
@@ -1144,12 +1144,12 @@ To plot multiple group data in tidy form we map the population variable to the `
 &lt;img src="02_intro_to_r_and_working_with_data_files/figure-html/unnamed-chunk-36-1.png" width="288" /&gt;
 .pull-right[
 .footnote[
-&lt;span style=" font-weight: bold;    color: #fdf9f6 !important;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #25496b !important;" &gt;Extra exercise:&lt;/span&gt;  Make the axes cross at (0,0)]
+&lt;span style=" font-weight: bold;    color: rgba(253, 249, 246, 255) !important;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: rgba(37, 73, 107, 255) !important;" &gt;Extra exercise:&lt;/span&gt;  Make the axes cross at (0,0)]
 ]
 ---
 # Working with Data 
 
-&lt;span style=" font-weight: bold;    color: #fdf9f6 !important;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #25496b !important;" &gt;Extra exercise:&lt;/span&gt;  Make the axes cross at (0,0)
+&lt;span style=" font-weight: bold;    color: rgba(253, 249, 246, 255) !important;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: rgba(37, 73, 107, 255) !important;" &gt;Extra exercise:&lt;/span&gt;  Make the axes cross at (0,0)
 
 
 ```r
@@ -1246,7 +1246,7 @@ ggplot(data = pigeon2, aes(x = population, y = distance)) +
 
 
 .footnote[
-&lt;span style=" font-weight: bold;    color: #fdf9f6 !important;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #25496b !important;" &gt;Extra exercise:&lt;/span&gt;  Can you (gratuitously) colour the boxes by population too?
+&lt;span style=" font-weight: bold;    color: rgba(253, 249, 246, 255) !important;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: rgba(37, 73, 107, 255) !important;" &gt;Extra exercise:&lt;/span&gt;  Can you (gratuitously) colour the boxes by population too?
 ]
 ---
 # Working with Data 
@@ -1266,7 +1266,7 @@ ggplot(data = pigeon2, aes(x = population, y = distance)) +
 
 class: inverse
 
-# 🥳 Congratulations! Keep practising! 🎂 
+# 🥳 Congratulations! Keep practising! 🎉 
 
 
 
